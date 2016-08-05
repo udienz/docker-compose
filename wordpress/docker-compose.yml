@@ -1,0 +1,31 @@
+version: '2'
+services:
+ wordpress:
+  image: wordpress
+  container_name: wordpress
+  links:
+   - wordpress_db:mysql
+  ports:
+   - 127.0.0.1:8081:80
+  environment:
+   WORDPRESS_DB_USER: wuMU9ZWgaJqdcax
+   WORDPRESS_DB_NAME: fy3GsunD4Q4yzXl
+   WORDPRESS_DB_PASSWORD: jW1GsI7i1wAbCtU
+ wordpress_db:
+  image: mariadb
+  container_name: mariadb
+  environment:
+   MYSQL_ROOT_PASSWORD: WhZGrHComavZAh9
+   MYSQL_DATABASE: fy3GsunD4Q4yzXl
+   MYSQL_USER: wuMU9ZWgaJqdcax
+   MYSQL_PASSWORD: jW1GsI7i1wAbCtU
+ varnish:
+  image: cloudposse/varnish
+  container_name: varnishd
+  links:
+   - wordpress:backend
+  ports:
+   - 80:80
+  environment:
+   - VARNISH_BACKEND_HOST=backend
+   - VARNISH_BACKEND_PORT=8081
