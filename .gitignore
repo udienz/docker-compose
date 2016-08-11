@@ -1,4 +1,6 @@
 */code/*
+*/db/*
 *.orig
 *.tmp
 *.bak
+common.env
