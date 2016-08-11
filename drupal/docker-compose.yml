@@ -13,11 +13,8 @@ services:
  drupaldb:
   container_name: drupaldb
   image: mysql:latest
-  environment:
-   - MYSQL_ROOT_PASSWORD=wcqXV31UndM5yMT
-   - MYSQL_DATABASE=0Zykrq3Lq64cmX3
-   - MYSQL_PASSWORD=wY7Ig2uGrIqe4MI
-   - MYSQL_USER=pjd1AD5dfIGRE7p
+  env_file:
+   - ./common.env
  phpmyadmin:
   container_name: drupalphpmyadmin
   image: phpmyadmin/phpmyadmin
