@@ -1,14 +1,16 @@
 version: '2'
 services:
  wordpress:
-  image: wordpress
+  image: wordpress:apache
   container_name: wordpress
+  env_file:
+   - ./common.env
   links:
    - wordpress_db:mysql
   volumes:
    - ./code:/code
   ports:
-   - 127.0.0.1:8081:80
+   - "80:80"
  wordpress_db:
   image: mariadb
   container_name: wordpress_db
