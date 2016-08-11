@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+ web:
+  container_name: drupal
+  image: drupal:latest
+  ports:
+   - "9081:80"
+  volumes:
+   - ./code:/code
+  links:
+   - drupaldb
+ drupaldb:
+  container_name: drupaldb
+  image: mysql:latest
+  environment:
+   - MYSQL_ROOT_PASSWORD=wcqXV31UndM5yMT
+   - MYSQL_DATABASE=0Zykrq3Lq64cmX3
+   - MYSQL_PASSWORD=wY7Ig2uGrIqe4MI
+   - MYSQL_USER=pjd1AD5dfIGRE7p
+ phpmyadmin:
+  container_name: drupalphpmyadmin
+  image: phpmyadmin/phpmyadmin
+  ports:
+   - "9082:80"
+  links:
+   - drupaldb
