@@ -83,7 +83,7 @@ publish-success:
         - $CI_PROJECT_DIR/utils/push-to-github.sh success
     when: on_success
 
-publish-success:
+publish-fail:
     image: udienz/gitlab-merge-resource
     before_script: []
     stage: deploy
