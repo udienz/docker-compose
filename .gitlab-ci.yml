@@ -18,3 +18,71 @@ build-docker:
     script:
      - docker build -t docker-compose docker-compose
      - docker tag docker-compose udienz/docker-compose:latest
+     - docker login -u="$DOCKERUSER" -p="$DOCKERPASS"
+     - docker push udienz/docker-compose:latest
+
+build-drupal:
+	image: udienz/docker-compose
+	stage: build
+	except:
+		refs:
+			- master
+	script:
+     - cd drupal
+     - bash gen-env.sh
+	 - docker-compose -f docker-compose.yml config
+
+build-nginx-php-mariadb:
+	image: udienz/docker-compose
+	stage: build
+	except:
+		refs:
+			- master
+	script:
+     - cd nginx-php-mariadb
+     - bash gen-env.sh
+	 - docker-compose -f nginx-php-mariadb/docker-compose.yml config
+
+build-wordpress-apache:
+	image: udienz/docker-compose
+	stage: build
+	except:
+		refs:
+			- master
+	script:
+     - cd nginx-php-mariadb
+     - bash gen-env.sh
+	 - docker-compose -f nginx-php-mariadb/apache.yml config
+
+create-pr:
+    image: udienz/gitlab-merge-resource
+    before_script: []
+    stage: deploy
+    except:
+        refs:
+            - master
+    script:
+        - $CI_PROJECT_DIR/utils/merge.sh
+    when: on_success
+
+publish-success:
+    image: udienz/gitlab-merge-resource
+    before_script: []
+    stage: deploy
+    except:
+        refs:
+            - master
+    script:
+        - $CI_PROJECT_DIR/utils/push-to-github.sh success
+    when: on_success
+
+publish-success:
+    image: udienz/gitlab-merge-resource
+    before_script: []
+    stage: deploy
+    except:
+        refs:
+            - master
+    script:
+        - $CI_PROJECT_DIR/utils/push-to-github.sh failure
+    when: on_failure
