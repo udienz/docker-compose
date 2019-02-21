@@ -37,8 +37,7 @@ build-nginx-php-mariadb:
             - master
     script:
         - cd nginx-php-mariadb
-        - bash gen-env.sh
-        - docker-compose -f nginx-php-mariadb/docker-compose.yml config
+        - docker-compose -f docker-compose.yml config
 
 build-wordpress-apache:
     image: udienz/docker-compose
@@ -47,9 +46,20 @@ build-wordpress-apache:
         refs:
             - master
     script:
-        - cd nginx-php-mariadb
+        - cd wordpress
         - bash gen-env.sh
-        - docker-compose -f nginx-php-mariadb/apache.yml config
+        - docker-compose -f apache.yml config
+
+build-wordpress-fpm:
+    image: udienz/docker-compose
+    stage: build
+    except:
+        refs:
+            - master
+    script:
+        - cd wordpress
+        - bash gen-env.sh
+        - docker-compose -f fpm.yml config
 
 create-pr:
     image: udienz/gitlab-merge-resource
