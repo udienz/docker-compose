@@ -22,37 +22,37 @@ build-docker:
      - docker push udienz/docker-compose:latest
 
 build-drupal:
-	image: udienz/docker-compose
-	stage: build
-	except:
-		refs:
-			- master
-	script:
-     - cd drupal
-     - bash gen-env.sh
-	 - docker-compose -f docker-compose.yml config
+    image: udienz/docker-compose
+    stage: build
+    except:
+        refs:
+            - master
+    script:
+        - cd drupal
+        - bash gen-env.sh
+        - docker-compose -f docker-compose.yml config
 
 build-nginx-php-mariadb:
-	image: udienz/docker-compose
-	stage: build
-	except:
-		refs:
-			- master
-	script:
-     - cd nginx-php-mariadb
-     - bash gen-env.sh
-	 - docker-compose -f nginx-php-mariadb/docker-compose.yml config
+    image: udienz/docker-compose
+    stage: build
+    except:
+        refs:
+            - master
+    script:
+        - cd nginx-php-mariadb
+        - bash gen-env.sh
+        - docker-compose -f nginx-php-mariadb/docker-compose.yml config
 
 build-wordpress-apache:
-	image: udienz/docker-compose
-	stage: build
-	except:
-		refs:
-			- master
-	script:
-     - cd nginx-php-mariadb
-     - bash gen-env.sh
-	 - docker-compose -f nginx-php-mariadb/apache.yml config
+    image: udienz/docker-compose
+    stage: build
+    except:
+        refs:
+            - master
+    script:
+        - cd nginx-php-mariadb
+        - bash gen-env.sh
+        - docker-compose -f nginx-php-mariadb/apache.yml config
 
 create-pr:
     image: udienz/gitlab-merge-resource
