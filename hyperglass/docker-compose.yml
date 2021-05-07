@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+ web:
+  build: docker
+  restart: unless-stopped
+  volumes:
+    - ./hyperglass.yaml:/etc/hyperglass/hyperglass.yaml
+    - ./devices.yaml:/etc/hyperglass/devices.yaml
+    - ./commands.yaml:/etc/hyperglass/commands.yaml
+    - ./ssh:/etc/hyperglass/ssh
+  ports:
+    - "8001:8001"
+ redis:
+  image: redis:alpine
+  restart: unless-stopped
